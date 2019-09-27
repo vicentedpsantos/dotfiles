@@ -1,13 +1,28 @@
+set nocompatible
+filetype off
 execute pathogen#infect()
 call pathogen#helptags()
 
 call plug#begin()
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
+call vundle#begin()
+Plugin 'scrooloose/syntastic'
+call vundle#end()
+
+" === Rubocop Warnings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_ruby_checkers = ['rubocop']
+
 " === Colorscheme"
-colorscheme brogrammer
+colorscheme Monokai
 
 " === General Config"
 set number				"Line numbers do help
@@ -30,12 +45,22 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 set wildmenu
 set wildmode=list:longest,full
 set mouse=a
-" ********************** Turn off Swap Files *************"
+
+" === Turn off Swap Files"
 set noswapfile
 set nobackup
 set nowb
 
-" ********** Persisitent Undo **********"
+" === The Silver Searcher
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+nnoremap \ :Ag<SPACE>
+
+
+"********** Persisitent Undo **********"
 "Keep undo history across sessions by storing in file.
 "Only works all the time
 if has('persistent_undo') && !isdirectory(expand('~').'/.vim/backups')
@@ -44,12 +69,12 @@ set undodir=~/.vim/backups
 set undofile
 endif
 
-"********** Folds **********"
+" === Folds"
 set foldmethod=indent			"fold based on indent
 set foldnestmax=3			"deepest fold ist 3 levels
 set nofoldenable			"dont fold by default
 
-"********** Scrolling **********
+" === Scrolling"
 set scrolloff=8				"Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
@@ -59,7 +84,7 @@ set hlsearch				"Highlight searches by default
 set ignorecase				"Ignore case when searching
 set smartcase				"unless we type a capital
 
-"********* Indentation **********
+"=== Indentation"
 set autoindent
 set smartindent
 set smarttab
@@ -68,14 +93,20 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
+"=== NERDTree Config"
+nmap <F6> :NERDTreeToggle<CR>
+map <leader>r :NERDTreeFind<cr>
+
 filetype plugin on
 filetype indent on
 
 set list listchars=tab:\ \ ,trail:·
 set linebreak    "Wrap lines at convenient points
 
-nnoremap <leader>rs :Rails spec<CR>
-nmap <F6> :NERDTreeToggle<CR>
+* === Key mappings"
+nnoremap <leader>rs :Rails<cr>
+map <leader>/ gcc<cr>
 map <leader>x :bn<cr>
 map <leader>z :bp<cr>
 map <leader>d :bd<cr>
+map <leader>t :FZF<cr>

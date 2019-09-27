@@ -1,160 +1,112 @@
-## Vim Cheat Sheet
+set nocompatible
+filetype off
+execute pathogen#infect()
+call pathogen#helptags()
 
-### Navigation
+call plug#begin()
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'elixir-editors/vim-elixir'
+call plug#end()
 
-- End of the file: shift + g
-- Next line: j
-- Go down a defined number of lines: number + j
-- Skip to next word: w
-- Skip back a word: b
-- Skip to next section: W
-- Skip back to previous section: B
-- Go to end of the line: $
-- Go to beginning of the line: 0
-- Go to top of the screen: shift + h
-- Go to bottom of the screen: shift + l
-- Forward multiple words: 5w
-- Forward multiple letters: 5l
-- Back multiple letters: 5h
-- Forward to the next 'y': fy (case sensitive)
+call vundle#begin()
+Plugin 'scrooloose/syntastic'
+call vundle#end()
 
+" === Rubocop Warnings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_ruby_checkers = ['rubocop']
 
-### Editing
+" === Colorscheme"
+colorscheme Monokai
 
-- Undo: u
-- Redo: ctrl + r
-- Inserting text where the cursor is: i
-- Inserting text at the start of the line: I
-- Insert at the end of the line: shift + a
-- Copy entire line: yy or Y
-- Paste copied line: p
-- Change multiple words: 5cw
-- Insert at the end of the line: A
+" === General Config"
+set number				"Line numbers do help
+set backspace=indent,eol,start		"Allow backspace and delete in insert mode
+set history=1000			"Store lots of :cmdline history
+set showcmd				"Show incomplete cmds down the bottom
+set showmode				"Show current mode down the bottom
+set gcr=a:blinkon0			"Disable cursor blinks
+set visualbell				"No sounds
+set autoread				"Reload files changed outside vim
+set hidden
+syntax on
+let mapleader=","
+set timeout timeoutlen=1500
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
+set wildmenu
+set wildmode=list:longest,full
+set mouse=a
 
-### Deleting
+" === Turn off Swap Files"
+set noswapfile
+set nobackup
+set nowb
 
-- d<leftArrow> will delete current and left character
-- d$ will delete from current position to end of line
-- d^ will delete from current backward to first non-white-space character
-- d0 will delete from current backward to beginning of line
-- dw deletes current to end of current word (including trailing space)
-- db deletes current to beginning of current word
-- Delete current line: dd
-- Join the line below: shift + j
-- Delete entire word: cw
-- Delete to the end of the line: shift + C
-- Delete multiple lines: d + number of lines + enter
-- Delete from current position to a specific line number: d<line number>G
-- Deleting all items in a file that start with a pattern: :g/< search term>/d
-- Deleting all lines that are empty or that contain only whitespace: :g/^\s*$/d
-
-
-### Selecting
-
-- Select the entire line: V
-- Select a range of text: v
-- Select a column: control + v
-- Reselect a block: gv
-- Select all: ggVG
-
-
-### Find and Replace
-
-- %s/pattern/text to replace
+" === The Silver Searcher
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+nnoremap \ :Ag<SPACE>
 
 
-### Saving
+"********** Persisitent Undo **********"
+"Keep undo history across sessions by storing in file.
+"Only works all the time
+if has('persistent_undo') && !isdirectory(expand('~').'/.vim/backups')
+silent !mkdir ~/.vim/backups > /dev/null 2>&1
+set undodir=~/.vim/backups
+set undofile
+endif
 
-- Save the file: :w
-- Save the file and quit: :wq
-- Quit without saving: :q!
+" === Folds"
+set foldmethod=indent			"fold based on indent
+set foldnestmax=3			"deepest fold ist 3 levels
+set nofoldenable			"dont fold by default
 
+" === Scrolling"
+set scrolloff=8				"Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
 
-### Views
+set incsearch				"Find the next match as we type the search
+set hlsearch				"Highlight searches by default
+set ignorecase				"Ignore case when searching
+set smartcase				"unless we type a capital
 
-- Use horizontal split: :sp filename
-- Use vertical split: :vsp filename
-- Switch from top to bottom: control + w + j
-- Switch from left to right: control + w + l
-- Switch from bottom to top: control + w + j
-- Switch from right to left: control + w + h
+"=== Indentation"
+set autoindent
+set smartindent
+set smarttab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
 
+"=== NERDTree Config"
+nmap <F6> :NERDTreeToggle<CR>
+map <leader>r :NERDTreeFind<cr>
 
-### Search
+filetype plugin on
+filetype indent on
 
-- While on current line: f + <queried item>
-- Search for word in file: /word + enter
-- Find next search result: n
-- Search backwards: N
-- Go to first result: ggn
-- Go to last result: GN
-- To remove search highlighting: :noh
+set list listchars=tab:\ \ ,trail:·
+set linebreak    "Wrap lines at convenient points
 
-
-### Modes
-
-- Normal
-- Insert
-- Visual
-- Replace
-- Command Line
-
-
-### Multiple Files
-
-- :e filename - Edit a file in a new buffer
-- :bnext (or :bn) - go to next buffer
-- :bprev (of :bp) - go to previous buffer
-- :bd - delete a buffer (close a file)
-- :sp filename - Open a file in a new buffer and split window
-- ctrl + ws - Split windows
-- ctrl + ww - switch between windows
-- ctrl + wq - Quit a window
-- ctrl + wv - Split windows vertically
-
-
-### Indenting
-
-- Fix indenting when pasting: set paste in .vimrc file
-- Indenting: visual mode + > or <
-- Repeat indenting: .
-
-
-## Commenting/Uncommenting
-
-- Comment: visual block select with CTRL-V then I# (insert # in the begining)
-- Uncomment: visual block select with CTRL-V then X (delete the first symbol on the line)
-
-
-### Visual Mode
-
-- Changing multiple lines of text: control + v + shift + i + action + esc
-- Select elements in paragraph: v + / + content
-
-
-### Display settings
-
-- Turning on line numbers: :set nu
-- Turning on syntax highlighting: :syntax on
-
-
-### Reseting Vim Settings
-
-```
-cd
-mv .vimrc .vimrc-old
-mv .vim .vim-old
-touch .vimrc; mkdir .vim
-```
-
-### Help
-
-- To get help: :h <topic>
-- To exit help: :bd
-
-
-### Removing blocks of text in code files
-
-- `c + i + t` will remove the code between HTML tags, such as: `<div>Some content</div>`
-- `c + i + }` will remove the code inside of a JavaScript function
+* === Key mappings"
+nnoremap <leader>rs :Rails<cr>
+map <leader>/ gcc<cr>
+map <leader>x :bn<cr>
+map <leader>z :bp<cr>
+map <leader>d :bd<cr>
+map <leader>t :FZF<cr>

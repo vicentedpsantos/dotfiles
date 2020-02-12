@@ -1,28 +1,39 @@
+set shell=/bin/bash
 set nocompatible
 filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
 execute pathogen#infect()
 call pathogen#helptags()
 
 call plug#begin()
+Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 call plug#end()
 
 call vundle#begin()
-Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 
-" === Rubocop Warnings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_ruby_checkers = ['rubocop']
+" === Turn off syntastic by default - ctrl-w E to activate
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+nnoremap <C-w>E :SyntasticCheck<CR> :SyntasticToggleMode<CR>
+
+" === prettier config
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#config#single_quote = 'false'
+let g:prettier#config#bracket_spacing = 'true'
 
 " === Colorscheme"
-colorscheme Monokai
+" colorscheme Monokai
+" colorscheme beekai
+" colorscheme wellsokai
+" colorscheme mopkai
+colorscheme rainbow_night
+" === Clipboard"
+set clipboard=unnamedplus
 
 " === General Config"
 set number				"Line numbers do help
@@ -84,7 +95,7 @@ set hlsearch				"Highlight searches by default
 set ignorecase				"Ignore case when searching
 set smartcase				"unless we type a capital
 
-"=== Indentation"
+"********* Indentation **********
 set autoindent
 set smartindent
 set smarttab
@@ -93,7 +104,7 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
-"=== NERDTree Config"
+"********* NERDTree Config *******
 nmap <F6> :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 
@@ -103,10 +114,11 @@ filetype indent on
 set list listchars=tab:\ \ ,trail:·
 set linebreak    "Wrap lines at convenient points
 
-* === Key mappings"
+nnoremap <CR> G
 nnoremap <leader>rs :Rails<cr>
 map <leader>/ gcc<cr>
 map <leader>x :bn<cr>
 map <leader>z :bp<cr>
 map <leader>d :bd<cr>
 map <leader>t :FZF<cr>
+let g:user_emmet_leader_key='<C-Z>'

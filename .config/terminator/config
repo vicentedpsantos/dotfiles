@@ -1,0 +1,32 @@
+[global_config]
+  inactive_color_offset = 0.602564102564
+  suppress_multiple_term_dialog = True
+  title_font = "hack, 8"
+  title_use_system_font = False
+  title_transmit_fg_color = "#ffffff"
+  title_transmit_bg_color = "#222222"
+  title_inactive_fg_color = "#ffffff"
+  title_inactive_bg_color = "#666666"
+
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+      profile = default
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_darkness = 1.0
+    background_type = transparent
+    font = Hack 10
+    use_system_font = False
+    show_titlebar = false
+    palette = "#222222:#e84f4f:#b7ce42:#fea63c:#66aabb:#b7416e:#6d878d:#dddddd:#666666:#d23d3d:#bde077:#ffe863:#aaccbb:#e16a98:#42717b:#cccccc"
+    foreground_color = "#ffffff"
+    background_color = "#161616"
+    cursor_color = "#ffffff"

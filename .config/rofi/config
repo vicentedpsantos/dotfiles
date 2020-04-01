@@ -1,0 +1,8 @@
+rofi.color-normal: #2f343f, #f3f4f5, #2f343f, #2f343f, #9575cd
+rofi.color-window: #902f343f, #2f343f, #2f343f
+rofi.width: 100
+rofi.lines: 10
+rofi.font: hack 18
+rofi.bw: 0
+rofi.padding: 800
+rofi.eh: 2

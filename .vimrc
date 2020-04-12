@@ -11,6 +11,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
 call vundle#begin()

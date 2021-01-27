@@ -1,6 +1,6 @@
-set shell=/bin/bash
+set shell=/usr/bin/zsh
+filetype on
 set nocompatible
-filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 execute pathogen#infect()
 call pathogen#helptags()
@@ -12,11 +12,17 @@ Plug 'junegunn/fzf.vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'terryma/vim-multiple-cursors'
+Plug 'vim-airline/vim-airline'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'preservim/nerdtree'
+Plug 'rking/ag.vim'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'vim-ruby/vim-ruby'
+Plug 'dense-analysis/ale'
+Plug 'kchmck/vim-coffee-script'
 call plug#end()
-
-call vundle#begin()
-Plugin 'tpope/vim-fugitive'
-call vundle#end()
 
 " === Turn off syntastic by default - ctrl-w E to activate
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
@@ -32,7 +38,8 @@ let g:prettier#config#bracket_spacing = 'true'
 " colorscheme beekai
 " colorscheme wellsokai
 " colorscheme mopkai
-colorscheme rainbow_night
+colorscheme molokai
+" colorscheme afterglow
 " === Clipboard"
 set clipboard=unnamedplus
 
@@ -106,7 +113,7 @@ set tabstop=2
 set expandtab
 
 "********* NERDTree Config *******
-nmap <F6> :NERDTreeToggle<CR>
+nmap <leader>q :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 
 filetype plugin on

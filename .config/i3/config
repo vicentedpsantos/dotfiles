@@ -1,9 +1,15 @@
+# update system
+# yay -Syyu
+#
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 font pango:monospace 8
 
-for_window [class=".*"] border pixel 0
+for_window [class=".*"] border pixel 2
+
+# start picom
+exec_always picom
 
 # Set keyboard speed
 exec_always xset r rate 250 60
@@ -144,16 +150,16 @@ bindsym $mod+Ctrl+Left workspace prev
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-set $ws1 1:code
-set $ws2 2:browser
-set $ws3 3:social
-set $ws4 4:tools
-set $ws5 5:terminals
-set $ws6 6:code
-set $ws7 7:code
-set $ws8 8:tools
-set $ws9 9:kraken
-set $ws0 10:music
+set $ws1 1:🚀
+set $ws2 2:🌏
+set $ws3 3:💬
+set $ws4 4:🔧
+set $ws5 5:💻
+set $ws6 6:🚀
+set $ws7 7:🚀
+set $ws8 8:🔧
+set $ws9 9:🐙
+set $ws0 10:🎧
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -332,12 +338,13 @@ set $inactive-bg-color #2f343f
 set $text-color #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color #E53935
+set $border-color #11e9ed
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
 	i3bar_command i3bar
 	status_command i3status
-	position bottom
+	position top
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 #	tray_output primary
@@ -351,7 +358,7 @@ bar {
                 background $bg-color
                 separator #757575
                 #                   border              background          text
-                focused_workspace   $bg-color           $bg-color           $text-color
+                focused_workspace   $border-color       $bg-color           $text-color
                 inactive_workspace  $inactive-bg-color  $inactive-bg-color  $inactive-text-color
                 urgent_workspace    $urgent-bg-color    $urgent-bg-color    $text-color
         }
@@ -362,10 +369,10 @@ bindsym $mod+Shift+m bar mode toggle
 
 # window colors
 #                             border              background          text                indicator
-client.focused                $bg-color           $bg-color           $text-color         #00ff00
-client.unfocused              $inactive-bg-color  $inactive-bg-color  $inactive-bg-color  #00ff00
-client.focused_inactive       $inactive-bg-color  $inactive-bg-color  $inactive-bg-color  #00ff00
-client.urgent                 $urgent-bg-color    $urgent-bg-color    $urgent-bg-color    #00ff00
+client.focused                $bg-color           $border-color       $bg-color         #00ff00
+client.unfocused              $inactive-bg-color  $inactive-bg-color  $bg-color         #00ff00
+client.focused_inactive       $inactive-bg-color  $inactive-bg-color  $bg-color         #00ff00
+client.urgent                 $urgent-bg-color    $urgent-bg-color    $bg-color         #00ff00
 client.placeholder            #000000 #0c0c0c #ffffff #000000 
 client.background             $bg-color
 
@@ -438,7 +445,7 @@ bindsym $mod+m move workspace to output right
 exec_always xrandr --output eDP-1-1 --primary --mode 1920x1080 --pos 1928x0 --rotate normal --output DP-1-1 --off --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal
 
 # Automatic loads
-exec_always feh --bg-scale /home/vicentesantos/Pictures/scorched_earth.jpg
+exec_always feh --bg-scale /home/vicentesantos/Pictures/colorful.png
 
 # Workspace assignments
 # To find program classes use xprop and then click the desired program
@@ -447,4 +454,4 @@ assign [class="Brave-browser"] $ws2
 assign [class="discord"] $ws3
 assign [class="keepassxc"] $ws4
 assign [class="Postman"] $ws4
-assign [class="GitKraken"] $ws4
+assign [class="GitKraken"] $ws9

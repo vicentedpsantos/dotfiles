@@ -1,27 +1,34 @@
 set shell=/usr/bin/zsh
+set encoding=utf-8
 filetype on
 set nocompatible
-set rtp+=~/.vim/bundle/Vundle.vim
 execute pathogen#infect()
 call pathogen#helptags()
 
 call plug#begin()
+"General
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'elixir-editors/vim-elixir'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-airline/vim-airline'
 Plug 'rafi/awesome-vim-colorschemes'
 Plug 'preservim/nerdtree'
 Plug 'rking/ag.vim'
-Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'vim-ruby/vim-ruby'
 Plug 'dense-analysis/ale'
+Plug 'tpope/vim-endwise'
+Plug 'rstacruz/vim-closer'
 Plug 'kchmck/vim-coffee-script'
+Plug 'elixir-editors/vim-elixir'
+Plug 'ngmy/vim-rubocop'
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " === Turn off syntastic by default - ctrl-w E to activate
@@ -34,14 +41,19 @@ let g:prettier#config#single_quote = 'false'
 let g:prettier#config#bracket_spacing = 'true'
 
 " === Colorscheme"
+set background=dark
 " colorscheme Monokai
 " colorscheme beekai
 " colorscheme wellsokai
 " colorscheme mopkai
-colorscheme molokai
+color molokai
 " colorscheme afterglow
+
 " === Clipboard"
 set clipboard=unnamedplus
+
+nnoremap p p`]<Esc>
+
 
 " === General Config"
 set number				"Line numbers do help
@@ -60,6 +72,21 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" Always show current position
+set ruler
+
+" Ignore case when searching
+set ignorecase
+set smartcase				"unless we type a capital
+
+" For regular expressions turn magic on
+set magic
+
+" Show matching brackets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink when matching brackets
+set mat=2
 
 set wildmenu
 set wildmode=list:longest,full
@@ -100,33 +127,47 @@ set sidescroll=1
 
 set incsearch				"Find the next match as we type the search
 set hlsearch				"Highlight searches by default
-set ignorecase				"Ignore case when searching
-set smartcase				"unless we type a capital
 
 "********* Indentation **********
 set autoindent
 set smartindent
 set smarttab
-set shiftwidth=2
-set softtabstop=2
 set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
 
 "********* NERDTree Config *******
 nmap <leader>q :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 
-filetype plugin on
-filetype indent on
-
 set list listchars=tab:\ \ ,trail:·
 set linebreak    "Wrap lines at convenient points
 
 nnoremap <CR> G
-nnoremap <leader>rs :Rails<cr>
-map <leader>/ gcc<cr>
+nnoremap <leader>rb :RuboCop -a<cr>
 map <leader>x :bn<cr>
 map <leader>z :bp<cr>
 map <leader>d :bd<cr>
 map <leader>t :FZF<cr>
+noremap <leader>a =ip
 let g:user_emmet_leader_key='<C-Z>'
+
+" *********** Comment
+map <leader>cc gcc
+
+hi Normal guibg=NONE ctermbg=NONE"
+
+filetype plugin on
+filetype indent on
+set smartindent
+autocmd BufRead,BufWritePre *.sh normal gg=G
+
+" Cria o comando `:Format` que formata o buffer inteiro
+command! -nargs=0 Format :call CocAction('format')
+
+" executa o `:Format` antes de salvar o arquivo
+augroup autoformat
+  au!
+  autocmd BufWritePre *.rs Format "
+augroup END

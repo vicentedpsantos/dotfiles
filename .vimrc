@@ -10,7 +10,6 @@ call plug#begin()
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-airline/vim-airline'
 Plug 'rafi/awesome-vim-colorschemes'
@@ -29,6 +28,13 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" React/JS/TS
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
+" Coc TS server
 call plug#end()
 
 " === Turn off syntastic by default - ctrl-w E to activate
@@ -72,6 +78,14 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" Insert mode mappings
+inoremap <c-u> <esc>viwUA
+
+" Normal mode mappings
+nnoremap <c-u> viwU$
+
+
 
 " Always show current position
 set ruler
@@ -163,11 +177,30 @@ filetype indent on
 set smartindent
 autocmd BufRead,BufWritePre *.sh normal gg=G
 
+" Coc config
+let g:coc_global_extensions = [
+  \ 'coc-tsserver'
+  \ ]
+
+autocmd FileType json syntax match Comment +\/\/.\+$+
+
 " Cria o comando `:Format` que formata o buffer inteiro
 command! -nargs=0 Format :call CocAction('format')
 
 " executa o `:Format` antes de salvar o arquivo
 augroup autoformat
   au!
-  autocmd BufWritePre *.rs Format "
+  autocmd BufWritePre *.rs Format " pra cada arquivo que vc quiser que formate automático, desde que tenha um language server pra ele instalado e rodando
 augroup END
+
+" React/JS/TS Setup
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif

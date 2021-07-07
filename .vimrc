@@ -6,6 +6,12 @@ execute pathogen#infect()
 call pathogen#helptags()
 
 call plug#begin()
+" Haskell
+Plug 'w0rp/ale'
+Plug 'mpickering/hlint-refactor-vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'raichoo/haskell-vim'
+Plug 'vim-scripts/indentpython.vim'
 "General
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -34,7 +40,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
-" Coc TS server
 call plug#end()
 
 " === Turn off syntastic by default - ctrl-w E to activate
@@ -82,7 +87,6 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " Insert mode mappings
 inoremap <c-u> <esc>viwUA
 inoremap jk <esc>
-inoremap <esc> <nop>
 
 " Normal mode mappings
 nnoremap <c-u> viwU$
@@ -208,3 +212,35 @@ endif
 if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
   let g:coc_global_extensions += ['coc-eslint']
 endif
+
+" ALE lint
+let g:ale_fixers = {
+      \  'javascript': ['eslint'],
+      \ 'haskell': ['hlint'],
+      \ 'python': ['autopep8'],
+      \ 'ruby': ['rubocop']
+      \}
+
+" Haskell auto-indent
+let g:haskell_enable_quantification = 1  " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1     " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrow_syntax = 1    " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_type_roles = 1       " to enable hightlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable hightlighting of `static`
+let g:haskell_backpack = 1                " to enable hightlighting of backpack keywords
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim', 'help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Formatting selected code
+xmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)

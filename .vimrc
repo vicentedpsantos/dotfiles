@@ -81,11 +81,15 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 " Insert mode mappings
 inoremap <c-u> <esc>viwUA
+inoremap jk <esc>
+inoremap <esc> <nop>
 
 " Normal mode mappings
 nnoremap <c-u> viwU$
-
-
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+nnoremap <S-h> <S-^>
+nnoremap <S-l> <S-$>
 
 " Always show current position
 set ruler

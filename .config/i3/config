@@ -6,7 +6,7 @@
 
 font pango:monospace 8
 
-for_window [class=".*"] border pixel 2
+for_window [class=".*"] border
 
 # start picom
 exec_always picom
@@ -21,10 +21,11 @@ set $mod Mod1
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 1
+default_border none
 default_floating_border normal
 
 # Hide borders
+
 hide_edge_borders both
 
 # change borders
@@ -40,7 +41,7 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec ~/.local/kitty.app/bin/kitty
 
 # kill focused window
 bindsym $mod+q kill
@@ -150,16 +151,27 @@ bindsym $mod+Ctrl+Left workspace prev
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-set $ws1 1:🚀
-set $ws2 2:🌏
-set $ws3 3:💬
-set $ws4 4:🔧
-set $ws5 5:💻
-set $ws6 6:🚀
-set $ws7 7:🚀
-set $ws8 8:🔧
-set $ws9 9:🐙
-set $ws0 10:🎧
+set $ws1 1: λ
+set $ws2 2: ʘ
+set $ws3 3: ʂ
+set $ws4 4: ֍
+set $ws5 5: ֍
+set $ws6 6: λ
+set $ws7 7: λ
+set $ws8 8: ϯ
+set $ws9 9: Ψ
+set $ws0 10: Ω
+
+#set $ws1 1:👾
+#set $ws2 2:🌏
+#set $ws3 3:💬
+#set $ws4 4:🔧
+#set $ws5 5:💻
+#set $ws6 6:👾
+#set $ws7 7:👾
+#set $ws8 8:🔧
+#set $ws9 9:🐙
+#set $ws0 10:🎧
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -296,9 +308,9 @@ exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
+# exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xautolock -time 20 -locker blurlock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 
@@ -333,12 +345,15 @@ set_from_resource $term_color13    color13
 set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
-set $bg-color #2f343f
-set $inactive-bg-color #2f343f
-set $text-color #f3f4f5
-set $inactive-text-color #676E7D
-set $urgent-bg-color #E53935
-set $border-color #11e9ed
+set $bar-background #212733
+set $bg-color #fab325
+set $inactive-bg-color #fad07b
+set $text-color #212733
+set $inactive-text-color #5492B6
+set $urgent-bg-color #fad07b
+# set $border-color #11e9ed
+# set $border-color #fcad03
+set $border-color #315A72
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
@@ -355,11 +370,11 @@ bar {
 #	strip_workspace_numbers yes
 
     colors {
-                background $bg-color
-                separator #757575
+                background $bar-background
+                separator $bar-background
                 #                   border              background          text
-                focused_workspace   $border-color       $bg-color           $text-color
-                inactive_workspace  $inactive-bg-color  $inactive-bg-color  $inactive-text-color
+                focused_workspace   $bg-color           $bg-color#          $text-color
+                inactive_workspace  $inactive-bg-color  $inactive-bg-color  $text-color
                 urgent_workspace    $urgent-bg-color    $urgent-bg-color    $text-color
         }
 }
@@ -369,12 +384,12 @@ bindsym $mod+Shift+m bar mode toggle
 
 # window colors
 #                             border              background          text                indicator
-client.focused                $bg-color           $border-color       $bg-color         #00ff00
-client.unfocused              $inactive-bg-color  $inactive-bg-color  $bg-color         #00ff00
-client.focused_inactive       $inactive-bg-color  $inactive-bg-color  $bg-color         #00ff00
-client.urgent                 $urgent-bg-color    $urgent-bg-color    $bg-color         #00ff00
+client.focused                $bar-background     $border-color       $text-color         #00ff00
+client.unfocused              $inactive-bg-color  $inactive-bg-color  $bar-background           #00ff00
+client.focused_inactive       $inactive-bg-color  $inactive-bg-color  $text-color         #00ff00
+client.urgent                 $urgent-bg-color    $urgent-bg-color    $text-color         #00ff00
 client.placeholder            #000000 #0c0c0c #ffffff #000000 
-client.background             $bg-color
+client.background             $bar-background
 
 #############################
 ### settings for i3-gaps: ###
@@ -445,7 +460,7 @@ bindsym $mod+m move workspace to output right
 exec_always xrandr --output eDP-1-1 --primary --mode 1920x1080 --pos 1928x0 --rotate normal --output DP-1-1 --off --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal
 
 # Automatic loads
-exec_always feh --bg-scale /home/vicentesantos/Pictures/colorful.png
+exec_always feh --bg-scale /home/vicentesantos/Pictures/background-haunted-forest.png
 
 # Workspace assignments
 # To find program classes use xprop and then click the desired program

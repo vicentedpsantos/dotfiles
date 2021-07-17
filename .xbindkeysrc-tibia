@@ -29,3 +29,19 @@
 # By defaults, xbindkeys does not pay attention with the modifiers
 # NumLock, CapsLock and ScrollLock.
 # Uncomment the lines above if you want to pay attention to them.
+
+# Scroll up triggers Page_Down
+"xte 'key Page_Up'"
+    b:4
+
+# Scroll up triggers Page_Up
+"xte 'key Page_Up'"
+    b:5
+
+# Hyperx Side Button 1 triggers Home
+"xte 'key Home'"
+    b:9
+
+# Hyperx Side Button 2 triggers Page_Down
+"xte 'key End'"
+    b:8

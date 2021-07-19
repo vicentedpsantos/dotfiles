@@ -30,7 +30,7 @@
 # NumLock, CapsLock and ScrollLock.
 # Uncomment the lines above if you want to pay attention to them.
 
-# Scroll up triggers Page_Down
+# Scroll down triggers Page_Down
 "xte 'key Page_Up'"
     b:4
 

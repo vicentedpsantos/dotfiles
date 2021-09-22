@@ -1,10 +1,11 @@
+" https://devhints.io/vimscript
+
 set shell=/usr/bin/zsh
 set encoding=utf-8
 filetype on
 set nocompatible
 execute pathogen#infect()
 call pathogen#helptags()
-
 call plug#begin()
 " Haskell
 Plug 'w0rp/ale'
@@ -34,12 +35,32 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'chrisbra/Colorizer'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+Plug 'thoughtbot/vim-rspec'
 " React/JS/TS
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
+" Kitty
+Plug 'fladson/vim-kitty'
+" ChucK
+Plug 'gmarik/Vundle.vim'
+Plug 'Shougo/vimproc.vim'
+Plug 'highwaynoise/chuck.vim'
+" Vue
+Plug 'leafOfTree/vim-vue-plugin'
+" Color
+Plug 'Badacadabra/vim-archery'
+" Tests
+Plug 'junegunn/vader.vim'
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+" Icons
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 " === Turn off syntastic by default - ctrl-w E to activate
@@ -57,14 +78,14 @@ set background=dark
 " colorscheme beekai
 " colorscheme wellsokai
 " colorscheme mopkai
-color molokai
+" color molokai
+" color 256_noir
+" color abstract
 " colorscheme afterglow
+colorscheme archery
 
 " === Clipboard"
 set clipboard=unnamedplus
-
-nnoremap p p`]<Esc>
-
 
 " === General Config"
 set number				"Line numbers do help
@@ -86,9 +107,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 " Insert mode mappings
 inoremap <c-u> <esc>viwUA
-inoremap jk <esc>
 
 " Normal mode mappings
+nnoremap p p`]<Esc>
 nnoremap <c-u> viwU$
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
@@ -126,7 +147,6 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 nnoremap \ :Ag<SPACE>
-
 
 "********** Persisitent Undo **********"
 "Keep undo history across sessions by storing in file.
@@ -230,6 +250,18 @@ let g:haskell_enable_type_roles = 1       " to enable hightlighting of type role
 let g:haskell_enable_static_pointers = 1  " to enable hightlighting of `static`
 let g:haskell_backpack = 1                " to enable hightlighting of backpack keywords
 
+let g:haskell_indent_if = 3
+let g:haskell_indent_case = 2
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 6
+let g:haskell_indent_before_where = 2
+let g:haskell_indent_after_bare_where = 2
+let g:haskell_indent_do = 3
+let g:haskell_indent_in = 1
+let g:haskell_indent_guard = 2
+let g:haskell_indent_case_alternative = 1
+let g:cabal_indent_section = 2
+
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -244,3 +276,28 @@ endfunction
 " Formatting selected code
 xmap <leader>f <Plug>(coc-format-selected)
 nmap <leader>f <Plug>(coc-format-selected)
+
+" vim-vue config
+let g:vim_vue_plugin_config = { 
+      \'syntax': {
+      \   'template': ['html'],
+      \   'script': ['javascript'],
+      \   'style': ['css'],
+      \},
+      \'full_syntax': [],
+      \'initial_indent': [],
+      \'attribute': 0,
+      \'keyword': 0,
+      \'foldexpr': 0,
+      \'debug': 0,
+      \}
+
+" Snippets
+let g:UltiSnipsExpandTrigger="<tab>"
+" list all snippets for current filetype
+let g:UltiSnipsListSnippets="<c-l>"
+
+map <Leader>rsc :call RunCurrentSpecFile()<CR>
+map <Leader>rss :call RunNearestSpec()<CR>
+map <Leader>rsl :call RunLastSpec()<CR>
+map <Leader>rsa :call RunAllSpecs()<CR>

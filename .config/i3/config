@@ -3,10 +3,13 @@
 #
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+# To check sound configurations: `pavucontrol`
+# use pulsemixer to mess with sound controls
 
 font pango:monospace 8
 
-for_window [class=".*"] border
+for_window [class=".*"] border pixel 1
 
 # start picom
 exec_always picom
@@ -25,7 +28,6 @@ default_border none
 default_floating_border normal
 
 # Hide borders
-
 hide_edge_borders both
 
 # change borders
@@ -47,7 +49,10 @@ bindsym $mod+Return exec ~/.local/kitty.app/bin/kitty
 bindsym $mod+q kill
 
 # start program launcher
-bindsym $mod+d exec --no-startup-id dmenu_recency
+# https://www.mankier.com/1/dmenu#Options
+# bindsym $mod+d exec --no-startup-id dmenu_recency -b -nf '#000000' -sb '#fab325' -nb '#fad07b' -sf '#000000' -fn 'Fira Code:pixelsize=13'
+bindsym $mod+d exec --no-startup-id dmenu_recency -b -nf '#000000' -sb '#0088CC' -nb '#81A3CF' -sf '#000000' -fn 'Fira Code:pixelsize=13'
+# bindsym $mod+d exec --no-startup-id ~/.config/rofi/bin/launcher_text
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -345,21 +350,25 @@ set_from_resource $term_color13    color13
 set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
-set $bar-background #212733
-set $bg-color #fab325
-set $inactive-bg-color #fad07b
-set $text-color #212733
+set $bar-background #0088CC
+# set $bg-color #fab325
+set $bg-color #81A3CF
+# set $inactive-bg-color #fad07b
+set $inactive-bg-color #A0A6DE
+set $text-color #25272C
 set $inactive-text-color #5492B6
-set $urgent-bg-color #fad07b
-# set $border-color #11e9ed
-# set $border-color #fcad03
-set $border-color #315A72
+set $urgent-bg-color #ed8274
+set $border-color #81A3CF
+# set $border-color #fab325
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
 	i3bar_command i3bar
+  # status_command i3status --config ~/.config/i3/i3_status
 	status_command i3status
 	position top
+  font pango:DejaVu Sans Mono 10
+  workspace_buttons yes
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 #	tray_output primary
@@ -385,7 +394,7 @@ bindsym $mod+Shift+m bar mode toggle
 # window colors
 #                             border              background          text                indicator
 client.focused                $bar-background     $border-color       $text-color         #00ff00
-client.unfocused              $inactive-bg-color  $inactive-bg-color  $bar-background           #00ff00
+client.unfocused              $inactive-bg-color  $inactive-bg-color  $bar-background     #00ff00
 client.focused_inactive       $inactive-bg-color  $inactive-bg-color  $text-color         #00ff00
 client.urgent                 $urgent-bg-color    $urgent-bg-color    $text-color         #00ff00
 client.placeholder            #000000 #0c0c0c #ffffff #000000 
@@ -460,13 +469,17 @@ bindsym $mod+m move workspace to output right
 exec_always xrandr --output eDP-1-1 --primary --mode 1920x1080 --pos 1928x0 --rotate normal --output DP-1-1 --off --output HDMI-0 --mode 1920x1080 --pos 0x0 --rotate normal
 
 # Automatic loads
-exec_always feh --bg-scale /home/vicentesantos/Pictures/background-haunted-forest.png
+# exec_always feh --bg-scale /home/vicentesantos/.config/wallpaper.png
+# xwallpaper --zoom ~/.config/wallpaper.png
+# exec_always --no-startup-id ~/.scripts/setbackground ~/.config/wallpaper.png
+exec_always --no-startup-id ~/.scripts/setbackground ~/wallpapers
 
 # Workspace assignments
 # To find program classes use xprop and then click the desired program
-for_window [class="Spotify"] move to workspace $ws0
-assign [class="Brave-browser"] $ws2
+for_window [class="xpotify"] move to workspace $ws0
 assign [class="discord"] $ws3
+assign [class="slack"] $ws3
 assign [class="keepassxc"] $ws4
 assign [class="Postman"] $ws4
 assign [class="GitKraken"] $ws9
+assign [class="jetbrains-datagrip"] $ws7

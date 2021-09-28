@@ -6,14 +6,13 @@ filetype on
 set nocompatible
 execute pathogen#infect()
 call pathogen#helptags()
+
 call plug#begin()
-" Haskell
 Plug 'w0rp/ale'
 Plug 'mpickering/hlint-refactor-vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'raichoo/haskell-vim'
 Plug 'vim-scripts/indentpython.vim'
-"General
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -34,7 +33,6 @@ Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'chrisbra/Colorizer'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'thoughtbot/vim-rspec'
@@ -59,8 +57,11 @@ Plug 'junegunn/vader.vim'
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" Icons
-Plug 'ryanoasis/vim-devicons'
+" Clojure
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'guns/vim-clojure-highlight'
+Plug 'tpope/vim-fireplace'
 call plug#end()
 
 " === Turn off syntastic by default - ctrl-w E to activate
@@ -85,6 +86,7 @@ set background=dark
 colorscheme archery
 
 " === Clipboard"
+" set clipboard=unnamed
 set clipboard=unnamedplus
 
 " === General Config"
@@ -278,7 +280,7 @@ xmap <leader>f <Plug>(coc-format-selected)
 nmap <leader>f <Plug>(coc-format-selected)
 
 " vim-vue config
-let g:vim_vue_plugin_config = { 
+let g:vim_vue_plugin_config = {
       \'syntax': {
       \   'template': ['html'],
       \   'script': ['javascript'],

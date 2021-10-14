@@ -34,6 +34,12 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'thoughtbot/vim-rspec'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+" Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'akinsho/bufferline.nvim'
+" Completion / LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
 " React/JS/TS
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
@@ -152,7 +158,7 @@ let g:user_emmet_leader_key='<C-Z>'
 
 " Telescope file finder
 nnoremap <leader>t <cmd>Telescope find_files<cr>
-nnoremap <leader>tt <cmd>Telescope live_grep<cr>
+nnoremap <leader>ff <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
@@ -183,42 +189,73 @@ let g:haskell_indent_guard = 2
 let g:haskell_indent_case_alternative = 1
 let g:cabal_indent_section = 2
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim', 'help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Formatting selected code
-xmap <leader>f <Plug>(coc-format-selected)
-nmap <leader>f <Plug>(coc-format-selected)
-
-" vim-vue config
-let g:vim_vue_plugin_config = {
-      \'syntax': {
-      \   'template': ['html'],
-      \   'script': ['javascript'],
-      \   'style': ['css'],
-      \},
-      \'full_syntax': [],
-      \'initial_indent': [],
-      \'attribute': 0,
-      \'keyword': 0,
-      \'foldexpr': 0,
-      \'debug': 0,
-      \}
-
-" Snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-" list all snippets for current filetype
-let g:UltiSnipsListSnippets="<c-l>"
-
+" Rspec
 map <Leader>rsc :call RunCurrentSpecFile()<CR>
 map <Leader>rss :call RunNearestSpec()<CR>
 map <Leader>rsl :call RunLastSpec()<CR>
 map <Leader>rsa :call RunAllSpecs()<CR>
+
+" Automatically install missing plugins on startup
+autocmd VimEnter *
+  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall --sync | q
+  \| endif
+
+" LSP Config / Completion
+lua << EOF
+  local nvim_lsp = require('lspconfig')
+  -- Use an on_attach function to only map the following keys
+  -- after the language server attaches to the current buffer
+  local on_attach = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    -- Enable completion triggered by <c-x><c-o>
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
+
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+  end
+
+  -- Use a loop to conveniently call 'setup' on multiple servers and
+  -- map buffer local keybindings when the language server attaches
+  local servers = { 'solargraph' }
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+      }
+    }
+  end
+EOF
+
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" END LSP Config / Completion
+
+" Tabline
+lua << EOF
+  require("bufferline").setup{}
+EOF

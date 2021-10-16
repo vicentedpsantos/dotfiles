@@ -1,13 +1,3 @@
-if [[ "$ONWARD_ZSH_ENABLE" == "true"  ]]; then
-  echo "{zshenv} Setting ONWARD_ZSH up with ZSH."
-  source "$HOME/.zsh/profiles/onward.zsh"
-fi
-
-if [[ "$PROXY_PICS_ZSH_ENABLE" == "true"  ]]; then
-  echo "{zshenv} Setting PROXY_PICS_ZSH up with ZSH."
-  source "$HOME/.zsh/profiles/proxy_pics.zsh"
-fi
-
 if [[ "$NATO_ZSH_ENABLE" == "true"  ]]; then
   echo "{zshenv} Setting NATO_ZSH up with ZSH."
   source "$HOME/.zsh/profiles/nato.zsh"

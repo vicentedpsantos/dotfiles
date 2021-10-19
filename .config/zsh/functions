@@ -1,0 +1,61 @@
+# $ extract
+#
+# Useful extraction function (https://github.com/xvoland/Extract)
+function extract() {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+ else
+    if [ -f "$1" ] ; then
+        NAME=${1%.*}
+        #mkdir $NAME && cd $NAME
+        case "$1" in
+          *.tar.bz2)   tar xvjf ./"$1"    ;;
+          *.tar.gz)    tar xvzf ./"$1"    ;;
+          *.tar.xz)    tar xvJf ./"$1"    ;;
+          *.lzma)      unlzma ./"$1"      ;;
+          *.bz2)       bunzip2 ./"$1"     ;;
+          *.rar)       unrar x -ad ./"$1" ;;
+          *.gz)        gunzip ./"$1"      ;;
+          *.tar)       tar xvf ./"$1"     ;;
+          *.tbz2)      tar xvjf ./"$1"    ;;
+          *.tgz)       tar xvzf ./"$1"    ;;
+          *.zip)       unzip ./"$1"       ;;
+          *.Z)         uncompress ./"$1"  ;;
+          *.7z)        7z x ./"$1"        ;;
+          *.xz)        unxz ./"$1"        ;;
+          *.exe)       cabextract ./"$1"  ;;
+          *)           echo "extract: '$1' - unknown archive method" ;;
+        esac
+    else
+        echo "'$1' - file does not exist"
+    fi
+fi
+}
+
+# $ hist
+#
+# A bit more convenient history lookup
+function hist() {
+    if [[ -n "$@" ]]; then
+        history | grep "$@"
+    else
+        history | less
+    fi
+}
+
+# $ run [n-times] [command]
+#
+# Execute a command n-times
+function run() {
+    local n="$1"
+    local cmd="${@:2}"
+
+    if [[ -n "$@" ]]; then
+        for i in `seq "$n"`; do
+            $cmd
+        done
+    else
+        echo "Usage: run [n-times] [command]"
+    fi
+}

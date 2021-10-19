@@ -1,0 +1,9 @@
+if [[ "$NATO_ZSH_ENABLE" == "true"  ]]; then
+  echo "{zshenv} Setting NATO_ZSH up with ZSH."
+  source "$HOME/.zsh/profiles/nato.zsh"
+fi
+
+if [[ "$DEFAULT_ZSH_ENABLE" == "true" ]]; then
+  echo "{zshenv} Setting DEFAULT_ZSH up with ZSH."
+  source "$HOME/.zsh/profiles/default.zsh"
+fi

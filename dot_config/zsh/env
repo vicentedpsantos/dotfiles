@@ -1,0 +1,10 @@
+#!/bin/bash
+
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
+export SPACEMACSDIR="~/.config/spacemacs.d"
+export OH_MY_ZSH="/home/vs/.oh-my-zsh/oh-my-zsh.sh"
+export EDITOR='nvim'
+export TERMINAL='kitty'
+export CHROME_EXECUTABLE='brave'
+export BROWSER='firefox'
+export SCRIPTS_DIR='/home/vs/scripts'

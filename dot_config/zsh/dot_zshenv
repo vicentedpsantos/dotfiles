@@ -1,0 +1,31 @@
+# ln -s ~/.config/zsh/.zshenv ~/.zshenv
+
+# ZSH_THEME="awesomepanda"
+# ZSH_THEME="eastwood"
+ZSH_THEME="simple"
+# ZSH_THEME="minimal"
+
+plugins=(
+  sudo
+  web-search
+  copydir
+  copyfile
+  history
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  wd
+)
+
+source $HOME/.config/zsh/env
+source $HOME/.config/zsh/path
+source $HOME/.config/zsh/alias
+source $HOME/.config/zsh/functions
+source $HOME/.config/zsh/profileswitch
+
+source $OH_MY_ZSH
+
+. $HOME/.asdf/asdf.sh
+
+# Fetch colors defined by Pywal
+(cat ~/.cache/wal/sequences &)
+source ~/.cache/wal/colors-tty.sh

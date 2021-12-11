@@ -1,0 +1,117 @@
+#!/bin/bash
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~"
+alias -- -="cd -"
+
+colorflag="--color"
+
+# Go to firefox current profile to access chrome/userChrome.css
+alias firefoxcss="cd $HOME/.mozilla/firefox/0376lyoy.default-release/chrome"
+
+# Use another klipse clojure repl
+alias crepl="clojure -A:klipse-repl"
+
+# Source venv and run rainbowstream
+alias tws="source venv/bin/activate && rainbowstream"
+
+# Update system packages
+alias update="yay -Syyu"
+
+# List all files colorized in long format
+alias ll="ls -lah $colorflag --group-directories-first"
+
+# List only directories
+alias lsd="ls -lF $colorflag | grep --color=never '^d'"
+
+# Always use color output for `ls`
+alias ls="command ls $colorflag"
+
+# Always enable colored `grep` output
+alias grep='grep --color=auto '
+
+# Always enable colored `fgrep` output (grep -F)
+alias fgrep='fgrep --color=auto'
+
+# Always enable colored `egrep` output (grep -E)
+alias egrep='egrep --color=auto'
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# Untar
+alias untar='tar xvf'
+
+# Tar
+alias targz='tar -czvf'
+
+# Usage: be rails data:migrate && rdy
+alias rdy='notify-send "Task is done"'
+
+# Kill process in port 3000
+alias kill3000="fuser -k -n tcp 3000"
+
+# Kill redis
+alias killredis="fuser -k -n tcp 6379"
+
+# Kill process at given port
+alias killport="fuser -k -n tcp $1"
+
+# Run emacs in terminal mode
+alias emacs="emacs -nw"
+
+# Explain (v) what was done when moving a file
+alias mv='mv -v'
+
+# Create any non-existent (p)arent directories and explain (v) what was done
+alias mkdir='mkdir -pv'
+
+# Get help with aliases
+alias help="cat ~/.config/zsh/alias | grep alias"
+
+# Config files
+alias vimcfg="nvim ~/.config/nvim/init.vim"
+alias i3cfg="nvim ~/.config/i3/config"
+alias zshenvcfg="nvim ~/.zshenv"
+alias aliascfg="nvim ~/.config/zsh/alias"
+alias pathcfg="nvim ~/.config/zsh/path"
+alias profilecfg="cd ~/.zsh/profiles/ && vim ."
+
+# gu shows a list of all developers and the number of commits they've made
+alias gu="git shortlog | grep -E '^[^ ]'"
+
+# Make rm potentially less destructive
+alias rm="rm -i"
+
+# Alias vim into nvim
+alias vim="nvim"
+
+# Zsh config
+alias zshconfig="vim ~/.zshrc"
+
+# Ohmyzsh config
+alias ohmyzsh="vim ~/.oh-my-zsh"
+
+# Cd into scripts dir
+alias scripts="cd ~/scripts"
+
+# Rails
+alias be="bundle exec"
+
+# Ruby
+
+# Toy weather script :P
+alias wtr="cd ~/scripts && wtr && cd ~"
+
+# Ngrok
+alias ngrokom="~/ngrok http 3000 -subdomain=onward-vicente"
+alias ngrokpom="~/ngrok http 3000 -subdomain=pom-vicente"
+
+# Alias lazygit
+alias lgit="lazygit ."
+
+# walagain
+alias walagn="wal -c && wal -i ~/.config/wallpaper.png"

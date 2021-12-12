@@ -38,7 +38,7 @@ font-0 = terminus:pixelsize=12;1
 font-1 = FontAwesome:size=10;3
 font-2 = Siji:pixelsize=10;1
 
-modules-left = i3 spotify
+modules-left = i3 spotify menu-apps
 modules-center = xwindow
 modules-right = usd eur filesystem volume memory cpu battery temperature date powermenu
 
@@ -108,25 +108,20 @@ ramp-coreload-4 = ▅
 ramp-coreload-5 = ▆
 ramp-coreload-6 = ▇
 ramp-coreload-7 = █
-ramp-coreload-underline = ${colors.fg}
+ramp-coreload-underline = ${colors.tertiary}
 
 type = internal/cpu
 interval = 2
 label = " %percentage%%"
 
-;label-underline = ${colors.modfg}
-;label-background = ${colors.bg}
-;label-overline = ${colors.white}
+label-underline = ${colors.tertiary}
 
 [module/memory]
 type = internal/memory
 interval = 2
 
 label = " %percentage_used%%"
-;label = RAM %percentage_used%%
-;label-underline = ${colors.modfg}
-;label-foreground = ${colors.modfg}
-;label-background = ${colors.bg}
+label-underline = ${colors.tertiary}
 
 [module/spotify]
 type = custom/script
@@ -174,25 +169,25 @@ format-volume = <bar-volume>
 label-volume = VOL
 label-volume-foreground = ${root.foreground}
 
-label-muted =  sound muted
+label-muted =  muted
 label-muted-foreground = ${colors.gray}
 
 bar-volume-width = 10
-bar-volume-foreground-0 = ${colors.green}
-bar-volume-foreground-1 = ${colors.green}
-bar-volume-foreground-2 = ${colors.green}
-bar-volume-foreground-3 = ${colors.green}
-bar-volume-foreground-4 = ${colors.yellow}
-bar-volume-foreground-5 = ${colors.red}
+bar-volume-foreground-0 = ${colors.tertiary}
+bar-volume-foreground-1 = ${colors.tertiary}
+bar-volume-foreground-2 = ${colors.tertiary}
+bar-volume-foreground-3 = ${colors.tertiary}
+bar-volume-foreground-4 = ${colors.tertiary}
+bar-volume-foreground-5 = ${colors.tertiary}
 bar-volume-gradient = false
-bar-volume-indicator = 
+bar-volume-indicator = 
 bar-volume-indicator-font = 4
-bar-volume-indicator-foreground = ${colors.white}
+bar-volume-indicator-foreground = ${colors.secondary}
 bar-volume-fill = 
 bar-volume-fill-font = 4
 bar-volume-empty = 
 bar-volume-empty-font = 4
-bar-volume-empty-foreground = ${colors.gray}
+bar-volume-empty-foreground = ${colors.secondary}
 
 [module/temperature]
 type = internal/temperature
@@ -213,6 +208,44 @@ ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground}
 
+[module/menu-apps]
+type = custom/menu
+expand-right = true
+
+label-open = 
+label-close = 
+label-separator = |
+format-spacing = 1
+
+menu-0-0 =  web
+menu-0-0-exec = menu-open-1
+menu-0-1 =  game
+menu-0-1-exec = menu-open-2
+menu-0-2 =  social
+menu-0-2-exec = menu-open-3
+menu-0-3 =  code
+menu-0-3-exec = menu-open-4
+
+menu-1-0 =  firefox
+menu-1-0-exec = firefox &
+menu-1-1 =  brave
+menu-1-1-exec = brave &
+
+menu-2-0 =  tibia
+menu-2-0-exec = tibia &
+menu-2-1 =  steam
+menu-2-1-exec = steam &
+
+menu-3-0 =  slack
+menu-3-0-exec = slack &
+menu-3-1 =  discord
+menu-3-1-exec = discord &
+menu-3-2 =  spotify
+menu-3-2-exec = spotify &
+
+menu-4-0 =  datagrip
+menu-4-0-exec = datagrip &
+
 [module/powermenu]
 type = custom/menu
 
@@ -220,16 +253,16 @@ expand-right = true
 
 format-spacing = 1
 
-label-open = 
+label-open = 
 label-open-foreground = ${colors.secondary}
-label-close =  cancel
+label-close =  cancel
 label-close-foreground = ${colors.secondary}
 label-separator = |
 label-separator-foreground = ${colors.foreground}
 
-menu-0-0 = reboot
+menu-0-0 =  reboot
 menu-0-0-exec = menu-open-1
-menu-0-1 = power off
+menu-0-1 =  power off
 menu-0-1-exec = menu-open-2
 
 menu-1-0 = cancel
@@ -265,7 +298,8 @@ format-discharging-underline = ${colors.yellow}
 format-discharging-padding = 1
 
 format-full =  <label-full>
-format-full-underline = ${self.format-charging-underline}
+
+format-full-underline = ${colors.tertiary}
 format-full-overline = ${self.format-charging-underline}
 format-full-padding = 1
 

@@ -6,7 +6,7 @@
 [colors]
 background = ${xrdb:color0:#222} 
 foreground = ${xrdb:color7:#222}
-secondary = #65a2d9
+secondary = ${xrdb:color5:#222}
 tertiary = ${xrdb:color2:#222}
 fourth = ${xrdb:color8:#f00}
 alert = #ed404c
@@ -69,7 +69,8 @@ mount-0 = /
 
 label-mounted = %{F#0a81f5}%mountpoint%%{F-} %percentage_used%%
 label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.foreground}
+label-unmounted-foreground = ${colors.secondary}
+format-underline = ${colors.tertiary}
 
 [module/i3]
 type = internal/i3
@@ -214,6 +215,7 @@ expand-right = true
 
 label-open = 
 label-close = 
+label-close-foreground = ${colors.secondary}
 label-separator = |
 format-spacing = 1
 
@@ -255,7 +257,7 @@ format-spacing = 1
 
 label-open = 
 label-open-foreground = ${colors.secondary}
-label-close =  cancel
+label-close = 
 label-close-foreground = ${colors.secondary}
 label-separator = |
 label-separator-foreground = ${colors.foreground}

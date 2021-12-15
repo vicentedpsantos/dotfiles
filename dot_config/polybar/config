@@ -38,7 +38,7 @@ font-0 = terminus:pixelsize=12;1
 font-1 = FontAwesome:size=10;3
 font-2 = Siji:pixelsize=10;1
 
-modules-left = i3 spotify menu-apps
+modules-left = i3 spotify terminal menu-apps
 modules-center = xwindow
 modules-right = usd eur filesystem volume memory cpu battery temperature date powermenu
 
@@ -209,6 +209,11 @@ ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground}
 
+[module/terminal]
+type = custom/text
+content = 
+click-left = kitty &
+
 [module/menu-apps]
 type = custom/menu
 expand-right = true
@@ -263,16 +268,13 @@ label-separator = |
 label-separator-foreground = ${colors.foreground}
 
 menu-0-0 =  reboot
-menu-0-0-exec = menu-open-1
+menu-0-0-exec = i3exit reboot &
 menu-0-1 =  power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo i3exit reboot &
-menu-1-2 = power off
-menu-1-2-exec = sudo i3exit shutdown &
+menu-0-1-exec = i3exit shutdown &
+menu-0-2 =  hibernate
+menu-0-2-exec = i3exit hibernate &
+menu-0-3 =  log out
+menu-0-3-exec = i3exit logout
 
 [settings]
 screenchange-reload = true

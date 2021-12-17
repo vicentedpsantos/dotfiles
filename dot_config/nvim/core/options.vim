@@ -3,7 +3,6 @@ set encoding=utf-8
 set nocompatible
 filetype plugin indent on   "allow auto-indenting depending on file type
 syntax on
-set clipboard=unnamedplus
 set lazyredraw
 set number
 set backspace=indent,eol,start
@@ -17,7 +16,6 @@ set hidden
 set timeout timeoutlen=1500
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
-set mouse=v                 " middle-click paste with 
 set hlsearch                " highlight search 
 set incsearch               " incremental search
 set tabstop=2               " number of columns occupied by a tab 
@@ -44,7 +42,6 @@ set nofoldenable			      " dont fold by default
 set scrolloff=8				      " Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
-set autoindent
 set smartindent
 set smarttab
 set list listchars=tab:\ \ ,trail:·

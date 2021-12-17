@@ -9,11 +9,17 @@ endif
 
 let g:user_emmet_leader_key='<C-Z>'
 
-autocmd BufRead,BufWritePre *.sh normal gg=G
-autocmd FileType json syntax match Comment +\/\/.\+$+
+augroup FORMAT
+  autocmd!
+  autocmd FileType json syntax match Comment +\/\/.\+$+
+  autocmd BufRead,BufWritePre *.rb :echo("formattingrubby")
+augroup end
 
 " Automatically install missing plugins on startup
-autocmd VimEnter *
-  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \|   PlugInstall --sync | q
-  \| endif
+augroup UTILS
+  autocmd!
+  autocmd VimEnter *
+    \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    \|   PlugInstall --sync | q
+    \| endif
+augroup end

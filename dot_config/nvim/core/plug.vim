@@ -32,9 +32,8 @@ call plug#begin()
   Plug 'vim-ruby/vim-ruby'
   " Rust
   Plug 'cespare/vim-toml'
-  Plug 'rust-lang/rust.vim'
-  " Completion / LSP
-  Plug 'dense-analysis/ale'
+  Plug 'simrat39/rust-tools.nvim'
+  Plug 'mfussenegger/nvim-dap'
   " Clojure
   Plug 'guns/vim-clojure-highlight'
   Plug 'guns/vim-sexp'

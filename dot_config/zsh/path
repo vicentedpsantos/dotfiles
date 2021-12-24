@@ -4,3 +4,5 @@ export PATH=/home/vs/scripts:$PATH
 export PATH=/home/vs/.gem/ruby/2.6.0/bin:$PATH
 export PATH=/var/lib/snapd/snap/bin/flutter:$PATH
 export PATH=/var/lib/snapd/snap/bin/dart:$PATH
+export PATH=/home/vs/.asdf/installs/rust/1.57.0/bin:$PATH
+export PATH=/home/vs/.local/bin:$PATH

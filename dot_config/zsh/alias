@@ -115,3 +115,8 @@ alias lgit="lazygit ."
 
 # walagain
 alias walagn="wal -c && wal -i ~/.config/wallpaper.png"
+
+# flutter
+alias fr="flutter run"
+alias fl="flutter logs"
+alias fdt="dart devtools"
